@@ -29,13 +29,13 @@ const Form = () => {
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
                     />
                 </div>
-                
+
                 <div className="mb-5">
                     <label
                         htmlFor="owner"
                         className="block text-gray-700 uppercase font-bold"
                     >
-                        Nombre Propietario 
+                        Nombre Propietario
                     </label>
 
                     <input
@@ -63,7 +63,7 @@ const Form = () => {
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
                     />
                 </div>
-                
+
                 <div className="mb-5">
                     <label
                         htmlFor="date"
@@ -96,8 +96,8 @@ const Form = () => {
                     />
                 </div>
 
-                <input 
-                    type="submit" 
+                <input
+                    type="submit"
                     className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors"
                     value="Agregar Paciente"
                 />
