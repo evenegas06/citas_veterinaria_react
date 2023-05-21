@@ -1,4 +1,30 @@
+import { useState } from 'react';
+
 const Form = () => {
+    /* --- Hooks - State --- */
+    const [patient, setPatient] = useState({
+        pet: '',
+        owner: '',
+        email: '',
+        date: '',
+        symptoms: '',
+    });
+
+    /* --- Functions --- */
+    const addPatient = (e) => {
+        e.preventDefault();
+        setPatient({});
+    };
+
+    const handleInputChange = (event) => {
+        const {name, value} = event.target;
+        
+        setPatient({
+            ...patient,
+            [name]: value
+        });
+    };
+
     return (
         <div className="md:w-1/2 lg:w-2/5">
             <h2 className="font-black text-3xl text-center">
@@ -12,7 +38,10 @@ const Form = () => {
                 </span>
             </p>
 
-            <form className="bg-white shadow-md rounded-lg py-7 px-5 mb-10">
+            <form
+                className="bg-white shadow-md rounded-lg py-7 px-5 mb-10"
+                onSubmit={addPatient}
+            >
                 <div className="mb-5">
                     <label
                         htmlFor="pet"
@@ -27,6 +56,9 @@ const Form = () => {
                         name="pet"
                         placeholder="Nombre de la mascota"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                        onChange={handleInputChange}
+                    // value={name}
+                    // onChange={(event) => { setName(event.target.value); }}
                     />
                 </div>
 
@@ -44,6 +76,7 @@ const Form = () => {
                         name="owner"
                         placeholder="Nombre del Propietario"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                        onChange={handleInputChange}
                     />
                 </div>
 
@@ -61,6 +94,7 @@ const Form = () => {
                         name="email"
                         placeholder="Correo de contacto"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                        onChange={handleInputChange}
                     />
                 </div>
 
@@ -77,6 +111,7 @@ const Form = () => {
                         id="date"
                         name="date"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                        onChange={handleInputChange}
                     />
                 </div>
 
@@ -93,6 +128,7 @@ const Form = () => {
                         name="symptoms"
                         placeholder="Describe los síntomas de la mascota"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                        onChange={handleInputChange}
                     />
                 </div>
 
