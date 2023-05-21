@@ -10,15 +10,35 @@ const Form = () => {
         symptoms: '',
     });
 
+    const [error, setError] = useState(false);
+
     /* --- Functions --- */
-    const addPatient = (e) => {
-        e.preventDefault();
-        setPatient({});
+
+    /**
+     * 
+     * @param {*} event 
+     * @returns 
+     */
+    const addPatient = (event) => {
+        event.preventDefault();
+
+        // validations v1
+        if (Object.values(patient).includes('')) {
+            setError(true);
+            return;
+        }
+
+        setError(false);
+        // setPatient({});
     };
 
+    /**
+     * 
+     * @param {*} event 
+     */
     const handleInputChange = (event) => {
-        const {name, value} = event.target;
-        
+        const { name, value } = event.target;
+
         setPatient({
             ...patient,
             [name]: value
@@ -42,6 +62,12 @@ const Form = () => {
                 className="bg-white shadow-md rounded-lg py-7 px-5 mb-10"
                 onSubmit={addPatient}
             >
+                {error &&
+                    <p className='bg-red-800 text-white text-center p-3 uppercase font-bold mb-3 rounded-md'>
+                        Todos los campos son obligatorios
+                    </p>
+                }
+
                 <div className="mb-5">
                     <label
                         htmlFor="pet"
