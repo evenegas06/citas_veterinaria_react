@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import PatientItem from "./PatientItem";
 
-const PatientsList = () => {
+const PatientsList = ({ patient_list }) => {
     return (
         <div className="md:w-1/2 lg:w-3/5">
             <h2 className="font-black text-3xl text-center">
@@ -14,11 +15,15 @@ const PatientsList = () => {
                 </span>
             </p>
 
-            <ul className="md:h-screen overflow-y-scroll">
-                <PatientItem />
-                <PatientItem />
-                <PatientItem />
-                <PatientItem />
+            <ul className="md:h-screen overflow-y-scroll mx-5">
+                {patient_list.map((patient) => {
+                    return (
+                        <PatientItem
+                            key={patient.id}
+                            patient={patient} 
+                        />
+                    );
+                })}
             </ul>
         </div>
     );

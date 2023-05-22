@@ -1,19 +1,22 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
+import ErrorAlert from './ErrorAlert';
 
-const Form = () => {
-    /* --- Hooks - State --- */
-    const [patient, setPatient] = useState({
-        pet: '',
-        owner: '',
-        email: '',
-        date: '',
-        symptoms: '',
-    });
+const initialState = {
+    id: '',
+    pet: '',
+    owner: '',
+    email: '',
+    date: '',
+    symptoms: '',
+};
 
+const Form = ({ patient_list, setPatientList }) => {
+    /* ----- State ----- */
+    const [patient, setPatient] = useState(initialState);
     const [error, setError] = useState(false);
 
-    /* --- Functions --- */
-
+    /* ----- Functions ----- */
     /**
      * 
      * @param {*} event 
@@ -29,7 +32,13 @@ const Form = () => {
         }
 
         setError(false);
-        // setPatient({});
+
+        setPatientList([
+            ...patient_list,
+            patient
+        ]);
+
+        setPatient(initialState);
     };
 
     /**
@@ -41,8 +50,16 @@ const Form = () => {
 
         setPatient({
             ...patient,
+            id: createRandomId(),
             [name]: value
         });
+    };
+
+    const createRandomId = () => {
+        const random = Math.random().toString(36).substring(2);
+        const date = Date.now().toString(36);
+
+        return random + date;
     };
 
     return (
@@ -62,11 +79,7 @@ const Form = () => {
                 className="bg-white shadow-md rounded-lg py-7 px-5 mb-10"
                 onSubmit={addPatient}
             >
-                {error &&
-                    <p className='bg-red-800 text-white text-center p-3 uppercase font-bold mb-3 rounded-md'>
-                        Todos los campos son obligatorios
-                    </p>
-                }
+                {error && <ErrorAlert message="Todos los campos son obligatorios"/>}
 
                 <div className="mb-5">
                     <label
@@ -82,8 +95,8 @@ const Form = () => {
                         name="pet"
                         placeholder="Nombre de la mascota"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                        value={patient.pet}
                         onChange={handleInputChange}
-                    // value={name}
                     // onChange={(event) => { setName(event.target.value); }}
                     />
                 </div>
@@ -102,6 +115,7 @@ const Form = () => {
                         name="owner"
                         placeholder="Nombre del Propietario"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                        value={patient.owner}
                         onChange={handleInputChange}
                     />
                 </div>
@@ -120,6 +134,7 @@ const Form = () => {
                         name="email"
                         placeholder="Correo de contacto"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                        value={patient.email}
                         onChange={handleInputChange}
                     />
                 </div>
@@ -137,6 +152,7 @@ const Form = () => {
                         id="date"
                         name="date"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                        value={patient.date}
                         onChange={handleInputChange}
                     />
                 </div>
@@ -154,6 +170,7 @@ const Form = () => {
                         name="symptoms"
                         placeholder="Describe los síntomas de la mascota"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                        value={patient.symptoms}
                         onChange={handleInputChange}
                     />
                 </div>
