@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-const PatientItem = ({ patient }) => {
+const PatientItem = ({ patient, setCurrentPatient }) => {
     const { pet, owner, email, date, symptoms } = patient;
 
     return (
@@ -43,10 +43,11 @@ const PatientItem = ({ patient }) => {
                 <button
                     type="button"
                     className="py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-white font-bold uppercase rounded-lg"
+                    onClick={() => { setCurrentPatient(patient); }}
                 >
                     Editar
                 </button>
-                
+
                 <button
                     type="button"
                     className="py-2 px-10 bg-red-600 hover:bg-red-700 text-white font-bold uppercase rounded-lg"

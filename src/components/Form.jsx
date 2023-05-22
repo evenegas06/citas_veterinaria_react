@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ErrorAlert from './ErrorAlert';
 
 const initialState = {
@@ -11,10 +11,17 @@ const initialState = {
     symptoms: '',
 };
 
-const Form = ({ patient_list, setPatientList }) => {
+const Form = ({ patient_list, setPatientList, current_patient }) => {
     /* ----- State ----- */
     const [patient, setPatient] = useState(initialState);
     const [error, setError] = useState(false);
+
+    /* ----- Hooks ----- */
+    useEffect(() => {
+        if (Object.keys(current_patient).length > 0) {
+            setPatient(current_patient);
+        }
+    }, [current_patient]);
 
     /* ----- Functions ----- */
     /**
@@ -178,7 +185,7 @@ const Form = ({ patient_list, setPatientList }) => {
                 <input
                     type="submit"
                     className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors"
-                    value="Agregar Paciente"
+                    value={current_patient.id ? "Editar Paciente" : "Agregar Paciente"}
                 />
             </form>
         </div>

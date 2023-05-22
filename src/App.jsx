@@ -8,6 +8,7 @@ function App() {
 
   /* ----- State ----- */
   const [patient_list, setPatientList] = useState([]);
+  const [current_patient, setCurrentPatient] = useState({});
 
   return (
     <div className="container mx-auto mt-20">
@@ -17,9 +18,13 @@ function App() {
         <Form
           patient_list={patient_list}
           setPatientList={setPatientList}
+          current_patient={current_patient}
         />
 
-        <PatientsList patient_list={patient_list} />
+        <PatientsList 
+          patient_list={patient_list} 
+          setCurrentPatient={setCurrentPatient}
+        />
       </div>
     </div>
   );
