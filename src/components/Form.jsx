@@ -2,28 +2,41 @@
 import { useEffect, useState } from 'react';
 import ErrorAlert from './ErrorAlert';
 
-const initialState = {
-    id: '',
-    pet: '',
-    owner: '',
-    email: '',
-    date: '',
-    symptoms: '',
-};
-
-const Form = ({ patient_list, setPatientList, current_patient }) => {
+const Form = ({ patient_list, setPatientList, current_patient, setCurrentPatient }) => {
+    /**
+     * 
+     * @returns 
+     */
+        const createRandomId = () => {
+            const random = Math.random().toString(36).substring(2);
+            const date = Date.now().toString(36);
+    
+            return random + date;
+        };
+    
     /* ----- State ----- */
-    const [patient, setPatient] = useState(initialState);
+    const [pet, setPet] = useState('');
+    const [owner, setOwner] = useState('');
+    const [email, setEmail] = useState('');
+    const [date, setDate] = useState('');
+    const [symptoms, setSymptoms] = useState('');
+
     const [error, setError] = useState(false);
 
     /* ----- Hooks ----- */
     useEffect(() => {
         if (Object.keys(current_patient).length > 0) {
-            setPatient(current_patient);
+            // setPatient(current_patient);
+            setPet(current_patient.pet);
+            setOwner(current_patient.owner);
+            setEmail(current_patient.email);
+            setDate(current_patient.date);
+            setSymptoms(current_patient.symptoms);
         }
     }, [current_patient]);
 
     /* ----- Functions ----- */
+
     /**
      * 
      * @param {*} event 
@@ -33,41 +46,56 @@ const Form = ({ patient_list, setPatientList, current_patient }) => {
         event.preventDefault();
 
         // validations v1
-        if (Object.values(patient).includes('')) {
+        if ([pet, owner, email, date, symptoms].includes('')) {
             setError(true);
             return;
         }
 
+        const patient = {
+            pet,
+            owner,
+            email,
+            date,
+            symptoms,
+        };
+
+        if (current_patient.id) {
+            // Editando
+            patient.id = current_patient.id;
+            
+            const act = patient_list.map((item) => {
+                return item.id === current_patient.id ? patient : item;
+            });
+
+            setPatientList(act);
+            setCurrentPatient({});
+
+        } else {
+            // Nuevo registro
+            patient.id = createRandomId();
+            setPatientList([
+                ...patient_list,
+                patient
+            ]);
+        }
+
         setError(false);
+        setPet('');
+        setOwner('');
+        setEmail('');
+        setDate('');
+        setSymptoms('');
 
-        setPatientList([
-            ...patient_list,
-            patient
-        ]);
-
-        setPatient(initialState);
     };
 
-    /**
-     * 
-     * @param {*} event 
-     */
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
+    // const handleInputChange = (event) => {
+    //     const { name, value } = event.target;
 
-        setPatient({
-            ...patient,
-            id: createRandomId(),
-            [name]: value
-        });
-    };
-
-    const createRandomId = () => {
-        const random = Math.random().toString(36).substring(2);
-        const date = Date.now().toString(36);
-
-        return random + date;
-    };
+    //     setPatient({
+    //         ...patient,
+    //         [name]: value
+    //     });
+    // };
 
     return (
         <div className="md:w-1/2 lg:w-2/5">
@@ -86,7 +114,7 @@ const Form = ({ patient_list, setPatientList, current_patient }) => {
                 className="bg-white shadow-md rounded-lg py-7 px-5 mb-10"
                 onSubmit={addPatient}
             >
-                {error && <ErrorAlert message="Todos los campos son obligatorios"/>}
+                {error && <ErrorAlert message="Todos los campos son obligatorios" />}
 
                 <div className="mb-5">
                     <label
@@ -102,9 +130,9 @@ const Form = ({ patient_list, setPatientList, current_patient }) => {
                         name="pet"
                         placeholder="Nombre de la mascota"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-                        value={patient.pet}
-                        onChange={handleInputChange}
-                    // onChange={(event) => { setName(event.target.value); }}
+                        value={pet}
+                        onChange={(event) => setPet(event.target.value)}
+                    // onChange={handleInputChange}
                     />
                 </div>
 
@@ -122,8 +150,8 @@ const Form = ({ patient_list, setPatientList, current_patient }) => {
                         name="owner"
                         placeholder="Nombre del Propietario"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-                        value={patient.owner}
-                        onChange={handleInputChange}
+                        value={owner}
+                        onChange={(event) => setOwner(event.target.value)}
                     />
                 </div>
 
@@ -141,8 +169,8 @@ const Form = ({ patient_list, setPatientList, current_patient }) => {
                         name="email"
                         placeholder="Correo de contacto"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-                        value={patient.email}
-                        onChange={handleInputChange}
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
                     />
                 </div>
 
@@ -159,8 +187,8 @@ const Form = ({ patient_list, setPatientList, current_patient }) => {
                         id="date"
                         name="date"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-                        value={patient.date}
-                        onChange={handleInputChange}
+                        value={date}
+                        onChange={(event) => setDate(event.target.value)}
                     />
                 </div>
 
@@ -177,8 +205,8 @@ const Form = ({ patient_list, setPatientList, current_patient }) => {
                         name="symptoms"
                         placeholder="Describe los síntomas de la mascota"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-                        value={patient.symptoms}
-                        onChange={handleInputChange}
+                        value={symptoms}
+                        onChange={(event) => setSymptoms(event.target.value)}
                     />
                 </div>
 

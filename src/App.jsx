@@ -19,6 +19,7 @@ function App() {
           patient_list={patient_list}
           setPatientList={setPatientList}
           current_patient={current_patient}
+          setCurrentPatient={setCurrentPatient}
         />
 
         <PatientsList 
