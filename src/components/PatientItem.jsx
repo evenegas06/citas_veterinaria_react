@@ -2,6 +2,9 @@
 const PatientItem = ({ patient, setCurrentPatient, deletePatient }) => {
     const { pet, owner, email, date, symptoms, id } = patient;
 
+    /**
+     *  Show confirm alert ande delete the element.
+     */
     const handleDelete = () => {
         const result = confirm('¿Deseas eliminar este paciente?');
         
