@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import PatientItem from "./PatientItem";
 
-const PatientsList = ({ patient_list, setCurrentPatient }) => {
+const PatientsList = ({ patient_list, setCurrentPatient, deletePatient }) => {
     return (
         <div className="md:w-1/2 lg:w-3/5">
             {patient_list.length ? (
@@ -24,6 +24,7 @@ const PatientsList = ({ patient_list, setCurrentPatient }) => {
                                     key={patient.id}
                                     patient={patient}
                                     setCurrentPatient={setCurrentPatient}
+                                    deletePatient={deletePatient}
                                 />
                             );
                         })}
