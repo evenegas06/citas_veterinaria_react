@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import PatientItem from "./PatientItem";
+import PatientItem from "./PatientItem.jsx";
 
 const PatientsList = ({ patient_list, setCurrentPatient, deletePatient }) => {
     return (

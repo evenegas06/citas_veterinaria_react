@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
-import ErrorAlert from './ErrorAlert';
+import ErrorAlert from './ErrorAlert.jsx';
 
 const Form = ({ patient_list, setPatientList, current_patient, setCurrentPatient }) => {
     /**
