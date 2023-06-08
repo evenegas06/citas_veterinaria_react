@@ -6,13 +6,14 @@ import PatientsList from "./components/PatientsList.jsx";
 
 function App() {
 
-  /* ----- State ----- */
+  /* ----- States ----- */
   const [patient_list, setPatientList] = useState(
     localStorage.getItem('patient_list') ? JSON.parse(localStorage.getItem('patient_list')) : []
   );
   const [current_patient, setCurrentPatient] = useState({});
 
   /* ----- Hooks ----- */
+  /* Set patient_list in localStorage */
   useEffect(() => {
     localStorage.setItem('patient_list', JSON.stringify(patient_list) ?? []);
   }, [patient_list]);

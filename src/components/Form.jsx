@@ -3,18 +3,7 @@ import { useEffect, useState } from 'react';
 import ErrorAlert from './ErrorAlert.jsx';
 
 const Form = ({ patient_list, setPatientList, current_patient, setCurrentPatient }) => {
-    /**
-     * 
-     * @returns 
-     */
-        const createRandomId = () => {
-            const random = Math.random().toString(36).substring(2);
-            const date = Date.now().toString(36);
-    
-            return random + date;
-        };
-    
-    /* ----- State ----- */
+    /* ----- States ----- */
     const [pet, setPet] = useState('');
     const [owner, setOwner] = useState('');
     const [email, setEmail] = useState('');
@@ -35,7 +24,17 @@ const Form = ({ patient_list, setPatientList, current_patient, setCurrentPatient
         }
     }, [current_patient]);
 
-    /* ----- Functions ----- */
+    /**
+     * Create a random id.
+     * 
+     * @returns {String}
+     */
+    const createRandomId = () => {
+        const random = Math.random().toString(36).substring(2);
+        const date = Date.now().toString(36);
+
+        return random + date;
+    };
 
     /**
      * 
@@ -62,7 +61,7 @@ const Form = ({ patient_list, setPatientList, current_patient, setCurrentPatient
         if (current_patient.id) {
             // Editando
             patient.id = current_patient.id;
-            
+
             const act = patient_list.map((item) => {
                 return item.id === current_patient.id ? patient : item;
             });
