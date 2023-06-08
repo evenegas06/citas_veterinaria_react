@@ -7,24 +7,16 @@ import PatientsList from "./components/PatientsList.jsx";
 function App() {
 
   /* ----- State ----- */
-  const [patient_list, setPatientList] = useState([]);
+  const [patient_list, setPatientList] = useState(
+    localStorage.getItem('patient_list') ? JSON.parse(localStorage.getItem('patient_list')) : []
+  );
   const [current_patient, setCurrentPatient] = useState({});
 
   /* ----- Hooks ----- */
   useEffect(() => {
-    const getLS = () => {
-      const patientLS = JSON.parse(localStorage.getItem('patient_list')) ?? [];
-      setPatientList(patientLS);
-    };
-
-    getLS();
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('patient_list', JSON.stringify(patient_list));
+    localStorage.setItem('patient_list', JSON.stringify(patient_list) ?? []);
   }, [patient_list]);
 
-  /* ----- Functions ----- */
   /**
    * Delete the specified item.
    * @param {string} id 
